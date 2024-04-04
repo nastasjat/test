@@ -1,0 +1,26 @@
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+        <ion-list-header>
+            <ion-label>Курси</ion-label>
+        </ion-list-header>
+        <div formArrayName="courses" *ngFor="let course of courseForm.get('courses')['controls']; let i = index">
+            <ion-item-group>
+                <ion-item-divider>
+                    <ion-label>Курс {{i + 1}}</ion-label>
+                </ion-item-divider>
+                <ion-item>
+                    <ion-label position="floating">Кількість груп</ion-label>
+                    <ion-input type="number" [formControl]="course.controls.groupCount"></ion-input>
+                    <ion-button (click)="addGroup(i)" size="small">Додати групи</ion-button>
+                </ion-item>
+                <div formArrayName="groups">
+                    <ion-item *ngFor="let group of course.get('groups')['controls']; let j = index">
+                        <ion-label>Група {{j + 1}}</ion-label>
+                        <ion-input type="number" [formControl]="group.controls.studentNum"></ion-input>
+                    </ion-item>
+                </div>
+            </ion-item-group>
+        </div>
+    </ion-list>
+    <ion-button type="submit" expand="block">Розрахувати</ion-button>
+</form>
